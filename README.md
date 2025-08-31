@@ -65,7 +65,7 @@ The app provides interactive insights into normal distribution analysis using th
 ## ⚙️ Installation & Usage
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/outlier-detection-app.git
+   git clone https://github.com/Imswappy/WinsorWeb
    cd outlier-detection-app
    ```
 
