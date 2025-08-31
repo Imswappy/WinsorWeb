@@ -1,10 +1,11 @@
-from flask import Flask, render_template
-import pandas as pd
+import os
+
 import numpy as np
-from scipy.stats import norm, zscore, sem
+import pandas as pd
 import plotly.graph_objs as go
 import plotly.io as pio
-import os
+from flask import Flask, render_template
+from scipy.stats import norm, sem, zscore
 
 app = Flask(__name__)
 
@@ -63,16 +64,15 @@ def clean_data():
     Loads the dataset, applies Winsorization to the 'age' column,
     and renders an HTML page to display the original and winsorized data directly.
     """
-    # Hakikisha dataset.csv ipo kwenye saraka moja na app.py
-    # Kwa madhumuni ya maonyesho, tutaunda dataset bandia ikiwa haipo.
+    
     dataset_path = 'dataset.csv'
     if not os.path.exists(dataset_path):
-        # Unda dataset bandia kwa madhumuni ya maonyesho
+        
         data = {
             'age': np.concatenate([
-                np.random.randint(18, 65, 90), # Umri wa kawaida
-                np.random.randint(5, 15, 5),  # Outliers za chini
-                np.random.randint(70, 90, 5)  # Outliers za juu
+                np.random.randint(18, 65, 90), 
+                np.random.randint(5, 15, 5),  
+                np.random.randint(70, 90, 5)  
             ]),
             'name': [f'Person_{i}' for i in range(100)]
         }
@@ -90,18 +90,17 @@ def clean_data():
     if 'age' not in df.columns:
         return "Hitilafu: Safu wima ya 'age' haikupatikana kwenye dataset.csv", 400
 
-    # Bainisha thamani za asilimia kwa Winsorization
-    winsor_percentile = 5  # Weka asilimia ya 5 na 95 kwa mipaka ya chini na juu
+    
+    winsor_percentile = 5  
 
-    # Kokotoa mipaka ya Winsorization
+    
     lower_bound = np.percentile(df['age'], winsor_percentile)
     upper_bound = np.percentile(df['age'], 100 - winsor_percentile)
 
     # Winsorization
     df['age_winsorized'] = df['age'].clip(lower=lower_bound, upper=upper_bound)
 
-    # Andaa data kwa jedwali la HTML
-    # Tutatuma orodha ya kamusi kwenye template kwa urahisi wa kuzunguka
+    
     cleaned_data = df[['age', 'age_winsorized']].to_dict(orient='records')
 
     return render_template('clean_data.html', data=cleaned_data)
