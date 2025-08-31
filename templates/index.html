@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Outlier Detection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<!--added Link-->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<nav class="fixed top-0 left-0 right-0 z-50 bg-blue-600 shadow-md">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-14 items-center">
+      <div class="flex space-x-8">
+        <a href="/" class="flex items-center text-white font-medium hover:text-blue-200 transition-colors duration-200">
+          <i class="fas fa-home mr-2"></i>
+          Home
+        </a>
+        <a href="/clean_data" class="flex items-center text-white font-medium hover:text-blue-200 transition-colors duration-200">
+          <i class="fas fa-table mr-2"></i>
+          Cleaned Data
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+<style>
+  body {
+    padding-top: 56px; /* navbar height (14 * 4px) */
+  }
+</style>
+<!--added Link ends-->
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen text-gray-800">
+  <div class="max-w-6xl mx-auto px-6 py-10 space-y-8">
+    <div class="text-center">
+      <h1 class="text-4xl font-extrabold text-blue-800">📊 Outlier Detection</h1>
+      <p class="mt-2 text-lg text-gray-600">Using Normal Distribution & Z-scores</p>
+    </div>
+    <!-- Cards Row -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-blue-500">
+        <p class="text-gray-500">Mean Age</p>
+        <p class="text-3xl font-bold text-blue-700">{{ mean | round(2) }}</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-purple-500">
+        <p class="text-gray-500">Standard Deviation</p>
+        <p class="text-3xl font-bold text-purple-700">{{ std | round(2) }}</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-md p-6 border-l-4 border-green-500">
+        <p class="text-gray-500">Standard Error</p>
+        <p class="text-3xl font-bold text-green-700">{{ se | round(2) }}</p>
+      </div>
+    </div>
+
+    <!-- Empirical Rule Section -->
+    <div class="bg-blue-100/50 border-l-4 border-blue-400 p-6 rounded-xl space-y-2 shadow">
+      <h2 class="text-xl font-semibold text-blue-800">📐 Empirical Rule Ranges</h2>
+      <p>68% (±1σ): <span class="font-bold">{{ one_sd[0] | round(2) }} - {{ one_sd[1] | round(2) }}</span></p>
+      <p>95% (±2σ): <span class="font-bold">{{ two_sd[0] | round(2) }} - {{ two_sd[1] | round(2) }}</span></p>
+      <p>99.7% (±3σ): <span class="font-bold">{{ three_sd[0] | round(2) }} - {{ three_sd[1] | round(2) }}</span></p>
+    </div>
+
+    <!-- Interpretation Section -->
+    <div class="bg-green-100/60 border-l-4 border-green-400 p-6 rounded-xl shadow">
+      <h2 class="text-lg font-medium text-green-800">🧠 Interpretation</h2>
+      <p class="text-green-900 mt-1">{{ interpretation }}</p>
+    </div>
+
+    <!-- PDF Chart -->
+    <div class="bg-white rounded-xl shadow-md p-4 overflow-x-auto">
+      <h2 class="text-lg font-semibold mb-3 text-gray-700">📈 PDF Plot (Normal Distribution)</h2>
+      <div class="min-w-[500px]">
+        {{ graph_html | safe }}
+      </div>
+    </div>
+
+    <!-- Outliers -->
+    <div class="bg-white rounded-xl shadow p-6">
+      <h2 class="text-lg font-semibold mb-3 text-red-600">🚨 Outlier Values (Z-score &gt; 3 or &lt; -3)</h2>
+      {% if outliers %}
+        <table class="w-full text-left border border-gray-200 rounded-lg overflow-hidden">
+          <thead class="bg-red-100 text-red-800">
+            <tr>
+              <th class="py-2 px-4">#</th>
+              <th class="py-2 px-4">Age</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in outliers %}
+              <tr class="border-t border-gray-200 hover:bg-red-50">
+                <td class="py-2 px-4">{{ loop.index }}</td>
+                <td class="py-2 px-4 font-semibold">{{ row[0] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="text-gray-600">No outliers detected in this dataset.</p>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>
