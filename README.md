@@ -65,21 +65,16 @@ The app provides interactive insights into normal distribution analysis using th
 ## ⚙️ Installation & Usage
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Imswappy/WinsorWeb
-   cd outlier-detection-app
+   git clone https://github.com/Imswappy/WinsorWeb.git
+   cd WinsorWeb
    ```
-
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Run Flask app:
+   
+2. Run Flask app:
    ```bash
    python app.py
    ```
 
-4. Open browser and navigate to:
+3. Open browser and navigate to:
    ```
    http://127.0.0.1:5000/
    ```
@@ -87,9 +82,15 @@ The app provides interactive insights into normal distribution analysis using th
 ---
 
 ## 📊 Example Outputs
-- **PDF Plot with Outliers Highlighted**  
-- **Table of Outliers**  
-- **Winsorized Dataset Table**  
+- **PDF Plot with Outliers Highlighted**
+<img width="1151" height="915" alt="image" src="https://github.com/user-attachments/assets/129da713-d97d-400c-a311-f858a922ffd6" />
+
+- **Table of Outliers**
+<img width="1088" height="278" alt="image" src="https://github.com/user-attachments/assets/ec478839-d1ef-4fa2-9ca9-3984ff3c4fc5" />
+
+- **Winsorized Dataset Table**
+- <img width="896" height="932" alt="image" src="https://github.com/user-attachments/assets/7916376e-1d78-4a32-85e0-11743a0e7341" />
+
 
 ---
 
