@@ -1,4 +1,4 @@
-# Outlier Detection & Data Cleaning Web App
+# WinsorWeb – Flask-based Winsorization & outlier detection app
 
 ## 📊 Overview
 A Flask-based data science application for **statistical outlier detection, visualization, and cleaning**.  
